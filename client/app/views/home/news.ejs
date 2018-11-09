@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>ANTI Fake News</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!--Bootsrap 4 CDN-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+      
+      
+      <!--Fontawesome CDN-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="css/blog-home.css" rel="stylesheet">
+    <style>
+
+    body {
+      padding-top: 54px;
+    }
+
+    @media (min-width: 992px) {
+      body {
+        padding-top: 56px;
+      }
+    }
+
+    </style>
+
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">Instagram Clone</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+         <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="http://localhost/search"><span class="fa fa-search"></span> Pesquisar
+              </a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" href="http://localhost/jornais"><span class="fa fa-newspaper"></span> Ver Jornais participantes</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" href="http://localhost/ranking"><span class="fa fa-mountain"></span> Ranking</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" href="http://localhost/login"><span class="fa fa-mountain"></span> Sou Jornalista</a>
+            </li>
+          </ul>
+        </div>
+        </div>
+      </div>
+    </nav>
+    <!-- Page Content -->
+    <div class="container">
+
+      <div class="row">
+
+        <!-- Blog Entries Column -->
+        <div class="col-md-12">
+
+          <h1 class="my-4">Post
+            <small>Post</small>
+          </h1>
+
+          <div id="container_timeline">
+          </div>
+
+
+          <!-- Pagination -->
+          <!-- 
+          <ul class="pagination justify-content-center mb-4">
+            <li class="page-item">
+              <a class="page-link" href="#">&larr; Antigos</a>
+            </li>
+            <li class="page-item disabled">
+              <a class="page-link" href="#">Novos &rarr;</a>
+            </li>
+          </ul>
+          -->
+
+        </div>
+
+
+
+      </div>
+      <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Anny Walker 2018</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <script type="text/javascript">
+    
+     
+      var url_string = window.location.href;
+      var url = new URL(url_string);
+      var c = url.searchParams.get("q");
+      
+
+      $(document).ready(function(){
+
+String.prototype.isEmpty = function() {
+    return (this.length === 0 || !this.trim());
+}
+
+          function doRequest(i, xhr, link) {
+            return new Promise( function(resolve, reject) {
+              
+              var formData_ = new FormData();
+              formData_.append("link", link);
+              xhr.open('POST', 'http://localhost:8080/api_get_noticia_');
+             
+              xhr.onreadystatechange=function(){
+                  if (xhr.readyState == 4 && xhr.status == 200)
+                      resolve({"responseText" : xhr.responseText, "i" : i, "xhr": xhr});
+              }
+            
+              xhr.send(formData_);
+            });
+        }
+
+        function carrega_noticias() {
+          var i;
+        for (i = 0  ; i < 1 ; i++){
+          var noticia;
+          doRequest(i, new XMLHttpRequest(), c).then(function (response){
+            
+
+            var fake_news;
+            var true_news;
+
+            var noticia = JSON.parse(response.responseText);
+
+ 
+
+            
+            $('#container_timeline').append(
+              '<div class="card mb-4">'+
+                  '<div class="card-header"><a href="'+noticia[0].link_news+'"><h2>'+noticia[0].link_news+'</h2></a></div>'+
+
+                   '<div class="comentarios" id="comentarios"></div>'+
+
+                  '<div class="card-body">'+
+                    '<button class="btn btn-danger btn_fake_news" value="'+noticia[0].link_news+'" id="'+noticia[0].link_news+'_fake"  type="button">'+noticia[0].fake_news.length+' Fake News</button>'+
+                    '<button class="btn btn-success btn_true_news" value="'+c+'" id="'+noticia[0].link_news+'_true" type="button">'+noticia[0].true_news.length+' True News</button>'+
+                  '</div>'+
+                '</div>'
+                );
+
+              if (noticia[0].comentarios != undefined){
+                  var comentarios = noticia[0].comentarios;
+
+                  for (var j = 0 ; j < comentarios.length ; j++){
+
+                    var new_html = "<b>"+comentarios[j].user + "</b> disse: " +comentarios[j].comentario;
+
+                    var new_elem = document.createElement('div');
+
+                    new_elem.classList.add("card-body");
+
+                    new_elem.innerHTML += ' ' + new_html;
+
+                    document.getElementById("comentarios").appendChild(new_elem);
+                  }
+
+                } 
+          
+
+            });
+
+
+
+        } 
+      }
+
+      carrega_noticias();
+
+
+      });
+    </script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+
+</html>

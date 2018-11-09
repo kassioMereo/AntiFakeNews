@@ -1,0 +1,27 @@
+Pasta "api" contém o servidor (dados consumíveis, é conectado ao banco de dados) que roda na porta 8080, para executar vá na pasta com o CMD e execute: node app.js
+Pasta "client" contém o client (consome os dados do servidor) que roda na porta 80, para executar vá na pasta com o CMD e execute: node app.js
+
+Recomendado: usar Firefox versão Developer
+
+Ferramentas utilizadas: MondoDB, NodeJS, Bootstrap 4, Jquery
+
+Linguagens utilizadas: CSS, HTML e Javascript
+
+Banco de dados: MongoDB, não relacional
+
+Base da dados: Google Custom Search
+
+Apresentação: 
+
+Páginas:
+	http://localhost : abre o modo pesquisa para o usuário comum
+	http://localhost/news/?q=URL_AQUI : abre a notícia e informa o que os jornalistas disseram da notícia
+	http://localhost/ranking : abre ranking de Top 10 Fake News do momento
+	http://localhost/login : abre o login dos usuários/jornais que possuem registro
+	http://localhost/registre_se : abre form para registrar novo usuário/jornal
+	http://localhost/search_noticias : abre modo pesquisa para usuários logados/jornais registrados
+	http://localhost/search_noticias_/?q=PESQUISA_AQUI&user=USUARIO_AQUI : abre lista de pesquisa sobre o tema pesquisado
+	http://localhost/ranking_news : abre ranking de Top 10 Fake News do momento
+	http://localhost/logout : realiza logout do usuário logado
+
+
